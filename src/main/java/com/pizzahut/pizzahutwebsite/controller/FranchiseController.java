@@ -27,6 +27,7 @@ public class FranchiseController {
 
 	@PostMapping("/addFranchise")
 	public FranchiseEntity addFranchise(@RequestBody FranchiseEntity ce) {
+		//test
 		return franchiseService.addFranchise(ce);
 	}
 
