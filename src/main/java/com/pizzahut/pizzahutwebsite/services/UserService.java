@@ -42,6 +42,6 @@ public class UserService {
 	}
 	
 	public void getByEmai(String email) {
-		
+		// pending
 	}
 }
