@@ -40,4 +40,8 @@ public class UserService {
 
 		return userRepository.save(existing);
 	}
+	
+	public void getByEmai(String email) {
+		
+	}
 }
