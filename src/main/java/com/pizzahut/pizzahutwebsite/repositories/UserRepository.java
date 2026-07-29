@@ -1,11 +1,15 @@
 package com.pizzahut.pizzahutwebsite.repositories;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.pizzahut.pizzahutwebsite.entity.UserEntity;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity , Long >{
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
+	Optional<UserEntity> findByEmail(String email);
 
+	public String deleteByEmail(String email);
 }

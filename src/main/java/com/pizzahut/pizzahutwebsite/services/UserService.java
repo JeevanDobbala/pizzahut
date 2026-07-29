@@ -1,6 +1,7 @@
 package com.pizzahut.pizzahutwebsite.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,14 +16,24 @@ public class UserService {
 	@Autowired
 	UserRepository userRepository;
 
-	public UserEntity addUser(@ModelAttribute UserEntity ue) {
-
-		return userRepository.save(ue);
+	public String addUser(@ModelAttribute UserEntity ue) {
+		String status = "";
+		UserEntity v = userRepository.findByEmail(ue.getEmail()).orElse(null);
+		if (v == null) {
+			userRepository.save(ue);
+			status = "user added successfully!";
+		} else {
+			status = "user with this email already exists!";
+		}
+		return status;
 
 	}
 
 	public String deleteUser(Long userId) {
-		UserEntity user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User Not Found"));
+		UserEntity user = userRepository.findById(userId).orElse(null);
+		if (user == null) {
+			return "no user exists with given Id !";
+		}
 		user.setActive(0);
 		userRepository.save(user);
 		return "User deleted successfully";
@@ -40,8 +51,21 @@ public class UserService {
 
 		return userRepository.save(existing);
 	}
-	
-	public void getByEmai(String email) {
-		// pending
+
+	public Optional<UserEntity> getByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
+
+	public String deleteByEmail(String email) {
+		String status = "";
+		UserEntity existing = userRepository.findByEmail(email).orElseThrow();
+		existing.setActive(0);
+		UserEntity v = userRepository.save(existing);
+		if (v.getActive() == 0 && v != null) {
+			status = "deleted successfully!";
+		} else {
+			status = "something went wrong!";
+		}
+		return status;
 	}
 }
