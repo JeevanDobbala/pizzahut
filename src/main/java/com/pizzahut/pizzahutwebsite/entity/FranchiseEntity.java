@@ -10,17 +10,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
-@NoArgsConstructor
 @Table(name = "franchise")
 public class FranchiseEntity {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long franchiseId;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long franchiseId;
+
 	@Column(nullable = false)
-    private String franchiseName;
+	private String franchiseName;
+
+	@Column(nullable = false)
+	private Integer active = 1;
 
 	public Long getFranchiseId() {
 		return franchiseId;
@@ -34,10 +35,16 @@ public class FranchiseEntity {
 		return franchiseName;
 	}
 
-	public void setFranchiseName(String farnchiseName) {
-		this.franchiseName = farnchiseName;
+	public void setFranchiseName(String franchiseName) {
+		this.franchiseName = franchiseName;
 	}
 
-	
-  
+	public Integer getActive() {
+		return active;
+	}
+
+	public void setActive(Integer active) {
+		this.active = active;
+	}
+
 }

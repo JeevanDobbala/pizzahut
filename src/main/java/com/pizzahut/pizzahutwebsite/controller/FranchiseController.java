@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,13 +23,17 @@ public class FranchiseController {
 	FranchiseService franchiseService;
 
 	@GetMapping("/getFranchiseNameById/{franchiseId}")
-	public Optional<FranchiseEntity> getFranchiseNameById(@PathVariable Long franchiseId) {
-		return franchiseService.getFranchiseById(franchiseId);
+	public ResponseEntity<?> getFranchiseNameById(@PathVariable Long franchiseId) {
+		Optional<FranchiseEntity> f=franchiseService.getFranchiseById(franchiseId);
+		if(f.isPresent()) {
+			return ResponseEntity.ok(f.get());
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Franchise is found with given Id ") ;
 	}
 
 	@PostMapping("/addFranchise")
 	public FranchiseEntity addFranchise(@RequestBody FranchiseEntity ce) {
-		//test
+		
 		return franchiseService.addFranchise(ce);
 	}
 

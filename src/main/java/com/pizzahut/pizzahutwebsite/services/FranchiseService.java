@@ -17,6 +17,7 @@ public class FranchiseService {
 
 	public Optional<FranchiseEntity> getFranchiseById(Long companyId) {
 		return franchiseRepository.findById(companyId);
+
 	}
 
 	public FranchiseEntity addFranchise(FranchiseEntity ce) {
@@ -24,21 +25,26 @@ public class FranchiseService {
 	}
 
 	public String deleteFranchiseById(Long companyId) {
-		franchiseRepository.deleteById(companyId);
-		return "deleted Successfully!";
+		FranchiseEntity f = franchiseRepository.findById(companyId).orElse(null);
+		if (f != null) {
+			f.setActive(0);
+			franchiseRepository.save(f);
+			return "deleted successfully";
+		}
+		return "No franchise found with given Id!";
 	}
-	
-	public List<FranchiseEntity> getAllFranchises(){
+
+	public List<FranchiseEntity> getAllFranchises() {
 		return franchiseRepository.findAll();
 	}
-	
+
 	public FranchiseEntity updateFranchiseById(Long franchiseId, FranchiseEntity franchise) {
 
-	    FranchiseEntity existingFranchise = franchiseRepository.findById(franchiseId)
-	            .orElseThrow(() -> new RuntimeException("Franchise Not Found"));
+		FranchiseEntity existingFranchise = franchiseRepository.findById(franchiseId)
+				.orElseThrow(() -> new RuntimeException("Franchise Not Found"));
 
-	    existingFranchise.setFranchiseName(franchise.getFranchiseName());
+		existingFranchise.setFranchiseName(franchise.getFranchiseName());
 
-	    return franchiseRepository.save(existingFranchise);
+		return franchiseRepository.save(existingFranchise);
 	}
 }
