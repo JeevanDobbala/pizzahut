@@ -25,7 +25,7 @@ public class PaymentService {
 	}
 	
 	public PaymentTypeEntity deletePaymentTypeById(@PathVariable Long PaymentId) {
-
+ 
 		return null;
 	}
 
