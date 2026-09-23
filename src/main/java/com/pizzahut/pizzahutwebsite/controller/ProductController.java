@@ -19,19 +19,45 @@ import com.pizzahut.pizzahutwebsite.services.ProductService;
 @RestController
 public class ProductController {
 	@Autowired
-	ProductService ps;
-
+	private ProductService ps;
+ 
+	/* @Author : JeevanDobbala
+	 * for adding the Product the below method is used 
+	 * expecting the json data and returns the Message if failed and if succeed 
+	 * it returns the product data
+	 */
 	@PostMapping("/addProduct")
-	public ProductEntity addProduct(@RequestBody ProductEntity pe) {
-		pe = ps.addProduct(pe);
-		return pe;
+	public ResponseEntity<?> addProduct(@RequestBody ProductEntity pe) {
+		ProductEntity p = ps.addProduct(pe);
+		if (p != null) {
+			return ResponseEntity.status(HttpStatus.CREATED).body(p);
+		}
+		return ResponseEntity.badRequest().body("failed to add the product!");
 	}
 
+	
+	/*@Author : JeevanDobbala
+	 * for delete the Product the below method is used 
+	 * expecting the json data and returns the Message if failed and if succeed 
+	 * it returns "success message"
+	 */
+	
 	@DeleteMapping("/deleteProduct/{productId}")
 	public String deleteProduct(@PathVariable Long productId) {
-		return ps.deleteProduct(productId);
+		Optional<ProductEntity> pe = ps.getProductById(productId);
+
+		if (pe.isPresent()) {
+			ps.deleteProduct(productId);
+			return "product deleted successfully!";
+		}
+		return "product deletion failed !";
 	}
 
+	/*@Author : JeevanDobbala
+	 * for retrieving  the Product data the below method is used 
+	 * expecting the json data and returns the Message if failed and if succeed 
+	 * it returns the product data
+	 */
 	@GetMapping("/getProductById/{productId}")
 	public ResponseEntity<?> getProductById(@PathVariable Long productId) {
 		Optional<ProductEntity> pe = ps.getProductById(productId);
@@ -42,6 +68,12 @@ public class ProductController {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No product found with the given productId");
 	}
 
+	/*@Author : JeevanDobbala
+	 * for retrieving the all Products data the below method is used 
+	 * expecting the json data and returns  
+	 * it returns the product list data 
+	 */
+	
 	@GetMapping("/getAllProducts")
 	public List<ProductEntity> getAllProducts() {
 		return ps.getAllProducts();

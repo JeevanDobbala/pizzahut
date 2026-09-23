@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.pizzahut.pizzahutwebsite.entity.ProductEntity;
 import com.pizzahut.pizzahutwebsite.repositories.ProductRepository;
@@ -17,7 +17,7 @@ public class ProductService {
 	@Autowired
 	ProductRepository pr;
 	
-	public ProductEntity addProduct(@ModelAttribute ProductEntity pe) {
+	public ProductEntity addProduct(@RequestBody ProductEntity pe) {
 		pr.save(pe);
 		return pe;
 	}

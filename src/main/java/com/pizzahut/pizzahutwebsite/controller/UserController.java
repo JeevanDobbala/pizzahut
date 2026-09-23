@@ -22,20 +22,40 @@ import com.pizzahut.pizzahutwebsite.services.UserService;
 public class UserController {
 
 	@Autowired
-	UserService us;
+	private UserService us;
 
+	/*
+	 * @Author : JeevanDobbala 
+	 * for adding the user the below method is used
+	 * expecting the json data and returns the Message if failed and if succeed it
+	 * returns the user data
+	 */
 	@PostMapping("/adduser")
 	public String addUser(@RequestBody UserEntity ue) {
 		return us.addUser(ue);
 
 	}
 
+	
+	/*
+	 * @Author : JeevanDobbala 
+	 * for deleting the user the below method is used
+	 * expecting the json data and returns the Message if failed and if succeed it
+	 * returns the user data
+	 */
 	@DeleteMapping("/deleteuser/{userId}")
 	public String deleteUser(@PathVariable Long userId) {
 		String s = us.deleteUser(userId);
 		return s;
 
 	}
+	
+	/*
+	 * @Author : JeevanDobbala 
+	 * for getting the user data with id the below method is used
+	 * expecting the json data and returns the Message if failed and if succeed it
+	 * returns the user data
+	 */
 
 	@GetMapping("/getuser/{userId}")
 	public UserEntity getUserById(@PathVariable Long userId) {
@@ -43,16 +63,34 @@ public class UserController {
 		return user;
 	}
 
+	/*
+	 * @Author : JeevanDobbala 
+	 * for getting the all user information the below method is used
+	 * expecting the json data and returns the Message if failed and if succeed it
+	 * returns the user data
+	 */
 	@GetMapping("/getAll")
 	public List<UserEntity> getAllUsers() {
 		return us.getAllUsers();
 	}
 
+	/*
+	 * @Author : JeevanDobbala 
+	 * for updating the user info the below method is used
+	 * expecting the json data and returns the Message if failed and if succeed it
+	 * returns the user data
+	 */
 	@PutMapping("/updateUserById/{userId}")
 	public UserEntity updateUserById(@PathVariable Long userId, @RequestBody UserEntity userEntity) {
 		return us.updateUserById(userId, userEntity);
 	}
 
+	/*
+	 * @Author : JeevanDobbala 
+	 * for getting the user information with email the below method is used
+	 * expecting the json data and returns the Message if failed and if succeed it
+	 * returns the user data
+	 */
 	@GetMapping("/getByEmail/{email}")
 	public ResponseEntity<?> getByEmail(@PathVariable String email) {
 
@@ -64,10 +102,23 @@ public class UserController {
 
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No user found with the given email");
 	}
-
+	/*
+	 * @Author : JeevanDobbala 
+	 * for deleting the user the below method is used
+	 * expecting the json data and returns the Message if failed and if succeed it
+	 * returns the user data
+	 */
 	@DeleteMapping("/deleteByEmail/{email}")
 	public String deleteByEmail(@PathVariable String email) {
-		return us.deleteByEmail(email);
+
+		Optional<UserEntity> user = us.getByEmail(email);
+
+		if (user.isPresent()) {
+			us.deleteByEmail(email);
+			return "user deleted Successfully!";
+		}
+
+		return "user not found with given email!";
 	}
 
 }

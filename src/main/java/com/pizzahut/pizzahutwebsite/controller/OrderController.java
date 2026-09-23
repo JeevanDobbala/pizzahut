@@ -17,7 +17,7 @@ import com.pizzahut.pizzahutwebsite.services.OrderService;
 @RestController
 public class OrderController {
 	@Autowired
-	OrderService os;
+	private OrderService os;
 
 	@PostMapping("/addOrder")
 	public String addOrder(@RequestBody OrderEntity oe) {
