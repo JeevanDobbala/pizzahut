@@ -14,7 +14,7 @@ import com.pizzahut.pizzahutwebsite.repositories.UserRepository;
 public class UserService {
 
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 
 	public String addUser(@ModelAttribute UserEntity ue) {
 		String status = "";

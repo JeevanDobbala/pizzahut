@@ -15,7 +15,7 @@ import com.pizzahut.pizzahutwebsite.repositories.ProductRepository;
 public class ProductService {
 	
 	@Autowired
-	ProductRepository pr;
+	private ProductRepository pr;
 	
 	public ProductEntity addProduct(@RequestBody ProductEntity pe) {
 		pr.save(pe);

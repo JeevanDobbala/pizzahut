@@ -13,7 +13,7 @@ import com.pizzahut.pizzahutwebsite.repositories.FranchiseRepository;
 public class FranchiseService {
 
 	@Autowired
-	FranchiseRepository franchiseRepository;
+	private FranchiseRepository franchiseRepository;
 
 	public Optional<FranchiseEntity> getFranchiseById(Long companyId) {
 		return franchiseRepository.findById(companyId);

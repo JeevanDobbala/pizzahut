@@ -14,7 +14,7 @@ import com.pizzahut.pizzahutwebsite.repositories.UserRepository;
 @Service
 public class OrderService {
 	@Autowired
-	OrderRepository orderRepository;
+	private OrderRepository orderRepository;
 
 	@Autowired
 	UserRepository userRepository;

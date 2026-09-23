@@ -20,7 +20,7 @@ import com.pizzahut.pizzahutwebsite.services.FranchiseService;
 @RestController
 public class FranchiseController {
 	@Autowired
-	FranchiseService franchiseService;
+	private FranchiseService franchiseService;
 
 	@GetMapping("/getFranchiseNameById/{franchiseId}")
 	public ResponseEntity<?> getFranchiseNameById(@PathVariable Long franchiseId) {
